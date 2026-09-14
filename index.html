@@ -1,1 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hearthstone Clay Co.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #E7E2D6;
+    --bg-panel: #F4F1E8;
+    --bg-deep: #DAD3C0;
+    --ink: #211E19;
+    --ink-soft: #5B564C;
+    --accent: #3E5C55;
+    --accent-soft: #C7D6CF;
+    --rust: #B5533C;
+    --rust-soft: #E9C9BC;
+    --line: #C9C2B0;
+    --white: #FBFAF6;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.5;
+  }
+  h1,h2,h3,.display{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    letter-spacing:-0.01em;
+    margin:0;
+  }
+  p{color:var(--ink-soft); max-width:62ch;}
+  a{color:inherit;}
+  button{font-family:inherit;}
+  img{max-width:100%;display:block;}
 
+  /* ---------- Header ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(231,226,214,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-wrap{
+    max-width:1180px; margin:0 auto; padding:16px 28px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{display:flex; align-items:center; gap:10px;}
+  .brand-mark{width:30px;height:30px;flex:none;}
+  .brand-name{font-family:'Fraunces',serif; font-size:19px; font-weight:600;}
+  nav.links{display:flex; gap:28px;}
+  nav.links a{
+    font-size:15px; text-decoration:none; color:var(--ink);
+    padding-bottom:2px; border-bottom:1px solid transparent;
+  }
+  nav.links a:hover{border-bottom:1px solid var(--accent);}
+  .cart-btn{
+    display:flex; align-items:center; gap:8px;
+    background:var(--ink); color:var(--white);
+    border:none; border-radius:3px; padding:10px 16px;
+    font-size:14px; cursor:pointer;
+  }
+  .cart-btn:hover{background:var(--accent);}
+  .cart-count{
+    background:var(--rust); color:var(--white);
+    border-radius:50%; width:19px; height:19px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:11px;
+  }
+  .menu-toggle{display:none; background:none; border:none; cursor:pointer;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    max-width:1180px; margin:0 auto; padding:72px 28px 60px;
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:48px; align-items:center;
+  }
+  .hero h1{font-size:56px; line-height:1.04;}
+  .hero p.lead{font-size:18px; margin-top:20px; max-width:46ch;}
+  .hero-cta{display:flex; gap:14px; margin-top:32px;}
+  .btn-primary{
+    background:var(--accent); color:var(--white); border:none;
+    padding:14px 24px; border-radius:3px; font-size:15px; cursor:pointer;
+  }
+  .btn-primary:hover{background:#324c46;}
+  .btn-ghost{
+    background:transparent; border:1px solid var(--ink); color:var(--ink);
+    padding:14px 24px; border-radius:3px; font-size:15px; cursor:pointer;
+  }
+  .btn-ghost:hover{background:var(--ink); color:var(--white);}
+
+  /* ---------- Section shells ---------- */
+  section{max-width:1180px; margin:0 auto; padding:80px 28px;}
+  .section-head{margin-bottom:40px; max-width:60ch;}
+  .section-head .eyebrow{
+    font-size:14px; color:var(--accent); font-weight:600; margin-bottom:8px;
+  }
+  .section-head h2{font-size:36px;}
+  .section-head p{margin-top:12px; font-size:16px;}
+  .alt-bg{background:var(--bg-deep);}
+
+  /* ---------- Shop grid ---------- */
+  .grid-4{display:grid; grid-template-columns:repeat(4,1fr); gap:22px;}
+  .product-card{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:4px;
+    overflow:hidden; display:flex; flex-direction:column;
+  }
+  .product-art{height:150px; display:flex; align-items:center; justify-content:center;}
+  .product-body{padding:16px; display:flex; flex-direction:column; gap:6px; flex:1;}
+  .product-body h3{font-size:17px; font-weight:500;}
+  .product-body .desc{font-size:13.5px; color:var(--ink-soft); margin:0;}
+  .product-foot{display:flex; align-items:center; justify-content:space-between; margin-top:auto; padding-top:10px;}
+  .price{font-size:15px; font-weight:600;}
+  .add-btn{
+    background:none; border:1px solid var(--ink); border-radius:3px;
+    padding:7px 12px; font-size:13px; cursor:pointer;
+  }
+  .add-btn:hover{background:var(--ink); color:var(--white);}
+
+  /* ---------- Membership ---------- */
+  .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  .tier-card{
+    border:1px solid var(--line); border-radius:4px; padding:28px;
+    background:var(--bg-panel); display:flex; flex-direction:column; gap:14px;
+  }
+  .tier-card.featured{border-color:var(--accent); box-shadow:0 0 0 1px var(--accent);}
+  .tier-name{font-size:15px; text-transform:none; color:var(--accent); font-weight:600;}
+  .tier-price{font-size:32px; font-family:'Fraunces',serif;}
+  .tier-price span{font-size:14px; color:var(--ink-soft); font-family:'IBM Plex Sans',sans-serif;}
+  .tier-list{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:9px;}
+  .tier-list li{font-size:14px; color:var(--ink-soft); padding-left:16px; position:relative;}
+  .tier-list li::before{content:"–"; position:absolute; left:0; color:var(--accent);}
+  .tier-btn{
+    margin-top:8px; background:var(--ink); color:var(--white); border:none;
+    padding:12px; border-radius:3px; cursor:pointer; font-size:14px;
+  }
+  .tier-btn:hover{background:var(--accent);}
+
+  /* ---------- Classes ---------- */
+  .class-row{
+    display:grid; grid-template-columns:110px 1fr auto; gap:22px; align-items:center;
+    padding:22px 0; border-bottom:1px solid var(--line);
+  }
+  .class-row:last-child{border-bottom:none;}
+  .class-date{font-family:'Fraunces',serif; font-size:15px; color:var(--accent);}
+  .class-date .dow{display:block; font-size:12px; color:var(--ink-soft); font-family:'IBM Plex Sans',sans-serif;}
+  .class-title{font-size:18px; margin-bottom:4px;}
+  .class-meta{font-size:13.5px; color:var(--ink-soft);}
+  .book-btn{
+    background:transparent; border:1px solid var(--ink); border-radius:3px;
+    padding:10px 18px; font-size:14px; cursor:pointer; white-space:nowrap;
+  }
+  .book-btn:hover{background:var(--ink); color:var(--white);}
+
+  /* ---------- Give ---------- */
+  .give-panel{
+    background:var(--accent); color:var(--white); border-radius:6px;
+    padding:48px; display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center;
+  }
+  .give-panel h2{color:var(--white); font-size:32px;}
+  .give-panel p{color:#DCE6E2;}
+  .amount-row{display:flex; gap:10px; flex-wrap:wrap; margin:20px 0;}
+  .amount-chip{
+    background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.4);
+    color:var(--white); padding:10px 18px; border-radius:30px; cursor:pointer; font-size:14px;
+  }
+  .amount-chip.selected{background:var(--white); color:var(--accent); border-color:var(--white);}
+  .custom-amount{
+    display:flex; align-items:center; gap:8px; margin-top:10px;
+  }
+  .custom-amount input{
+    background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.4);
+    color:var(--white); padding:10px 14px; border-radius:3px; width:120px; font-size:14px;
+  }
+  .custom-amount input::placeholder{color:#DCE6E2;}
+  .give-btn{
+    background:var(--white); color:var(--accent); border:none; padding:14px 26px;
+    border-radius:3px; font-size:15px; cursor:pointer; font-weight:600;
+  }
+
+  /* ---------- Footer ---------- */
+  footer{border-top:1px solid var(--line); padding:44px 28px; }
+  .footer-wrap{max-width:1180px; margin:0 auto; display:flex; justify-content:space-between; flex-wrap:wrap; gap:20px;}
+  .footer-wrap p{font-size:13px; color:var(--ink-soft); margin:0;}
+
+  /* ---------- Cart drawer ---------- */
+  .overlay{
+    position:fixed; inset:0; background:rgba(33,30,25,0.45); z-index:90;
+    opacity:0; pointer-events:none; transition:opacity .25s ease;
+  }
+  .overlay.open{opacity:1; pointer-events:auto;}
+  .drawer{
+    position:fixed; top:0; right:0; height:100%; width:420px; max-width:92vw;
+    background:var(--white); z-index:91; transform:translateX(100%);
+    transition:transform .3s ease; display:flex; flex-direction:column;
+    box-shadow:-8px 0 30px rgba(0,0,0,0.15);
+  }
+  .drawer.open{transform:translateX(0);}
+  .drawer-head{
+    padding:22px 24px; border-bottom:1px solid var(--line);
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .drawer-head h3{font-size:20px;}
+  .drawer-close{background:none; border:none; font-size:22px; cursor:pointer; color:var(--ink-soft);}
+  .drawer-body{flex:1; overflow-y:auto; padding:20px 24px; display:flex; flex-direction:column; gap:16px;}
+  .cart-item{display:flex; gap:12px; align-items:flex-start; border-bottom:1px solid var(--line); padding-bottom:14px;}
+  .cart-item-tag{
+    font-size:10.5px; text-transform:uppercase; letter-spacing:0.04em;
+    color:var(--accent); font-weight:600; margin-bottom:2px; display:block;
+  }
+  .cart-item-name{font-size:15px; font-weight:500;}
+  .cart-item-detail{font-size:12.5px; color:var(--ink-soft);}
+  .cart-item-right{margin-left:auto; text-align:right; display:flex; flex-direction:column; align-items:flex-end; gap:6px;}
+  .cart-item-price{font-size:14px; font-weight:600;}
+  .qty-controls{display:flex; align-items:center; gap:8px;}
+  .qty-controls button{
+    width:22px;height:22px;border:1px solid var(--line); background:var(--bg-panel);
+    border-radius:3px; cursor:pointer; font-size:13px; line-height:1;
+  }
+  .remove-link{background:none; border:none; color:var(--ink-soft); font-size:12px; text-decoration:underline; cursor:pointer; padding:0;}
+  .empty-cart{color:var(--ink-soft); font-size:14px; text-align:center; padding:60px 0;}
+  .drawer-foot{border-top:1px solid var(--line); padding:20px 24px; display:flex; flex-direction:column; gap:12px;}
+  .total-row{display:flex; justify-content:space-between; font-size:16px; font-weight:600;}
+  .checkout-btn{
+    background:var(--ink); color:var(--white); border:none; padding:14px;
+    border-radius:3px; font-size:15px; cursor:pointer;
+  }
+  .checkout-btn:hover{background:var(--accent);}
+  .checkout-btn:disabled{background:var(--line); cursor:not-allowed;}
+
+  /* ---------- Modal (checkout / booking) ---------- */
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(33,30,25,0.55); z-index:95;
+    display:none; align-items:center; justify-content:center; padding:20px;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal{
+    background:var(--white); border-radius:6px; width:460px; max-width:100%;
+    max-height:88vh; overflow-y:auto; padding:32px;
+  }
+  .modal h3{font-size:22px; margin-bottom:6px;}
+  .modal .sub{font-size:13.5px; color:var(--ink-soft); margin-bottom:22px;}
+  .slot-list{display:flex; flex-direction:column; gap:10px; margin-bottom:8px;}
+  .slot-btn{
+    text-align:left; background:var(--bg-panel); border:1px solid var(--line);
+    border-radius:4px; padding:13px 16px; cursor:pointer; font-size:14px;
+  }
+  .slot-btn:hover{border-color:var(--accent); background:var(--accent-soft);}
+  .field{display:flex; flex-direction:column; gap:6px; margin-bottom:14px;}
+  .field label{font-size:12.5px; color:var(--ink-soft); font-weight:500;}
+  .field input{
+    border:1px solid var(--line); border-radius:3px; padding:11px 12px; font-size:14px;
+    font-family:inherit; background:var(--bg-panel);
+  }
+  .field input:focus{outline:2px solid var(--accent); outline-offset:1px;}
+  .field-row{display:flex; gap:12px;}
+  .field-row .field{flex:1;}
+  .demo-note{
+    font-size:12px; color:var(--rust); background:var(--rust-soft);
+    padding:10px 12px; border-radius:4px; margin-bottom:18px;
+  }
+  .modal-close{background:none; border:none; font-size:20px; cursor:pointer; float:right; color:var(--ink-soft);}
+  .pay-btn{
+    width:100%; background:var(--accent); color:var(--white); border:none;
+    padding:14px; border-radius:3px; font-size:15px; cursor:pointer; margin-top:6px;
+  }
+  .pay-btn:hover{background:#324c46;}
+  .success-screen{text-align:center; padding:20px 0;}
+  .success-icon{
+    width:56px;height:56px;border-radius:50%;background:var(--accent);
+    color:var(--white); display:flex; align-items:center; justify-content:center;
+    font-size:26px; margin:0 auto 18px;
+  }
+  .toast{
+    position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--ink); color:var(--white); padding:13px 22px; border-radius:30px;
+    font-size:14px; z-index:120; opacity:0; pointer-events:none; transition:all .25s ease;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+  @media (max-width:900px){
+    .hero{grid-template-columns:1fr; padding-top:44px;}
+    .hero h1{font-size:38px;}
+    .grid-4{grid-template-columns:repeat(2,1fr);}
+    .grid-3{grid-template-columns:1fr;}
+    .give-panel{grid-template-columns:1fr;}
+    nav.links{
+      position:absolute; top:100%; left:0; right:0; background:var(--bg);
+      flex-direction:column; padding:18px 28px; gap:16px; border-bottom:1px solid var(--line);
+      display:none;
+    }
+    nav.links.open{display:flex;}
+    .menu-toggle{display:block;}
+    .class-row{grid-template-columns:1fr; gap:8px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-wrap">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 30 30" fill="none">
+        <path d="M6 11c0-4 4-7 9-7s9 3 9 7c0 3-2 4-2 8 0 4-3 6-7 6s-7-2-7-6c0-4-2-5-2-8Z" stroke="#3E5C55" stroke-width="1.6"/>
+      </svg>
+      <span class="brand-name">Hearthstone Clay Co.</span>
+    </div>
+    <nav class="links" id="navLinks">
+      <a href="#shop">Shop</a>
+      <a href="#membership">Membership</a>
+      <a href="#classes">Classes</a>
+      <a href="#give">Give</a>
+    </nav>
+    <div style="display:flex; align-items:center; gap:10px;">
+      <button class="cart-btn" onclick="openCart()">
+        Cart <span class="cart-count" id="cartCount">0</span>
+      </button>
+      <button class="menu-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <h1>Clay, fired&nbsp;slow,<br>held&nbsp;by&nbsp;hand.</h1>
+    <p class="lead">A working studio and shop on the edge of town — wheel-thrown goods, an open kiln for members, weekend classes, and a fund that keeps the doors open to anyone who wants to learn.</p>
+    <div class="hero-cta">
+      <button class="btn-primary" onclick="scrollToId('shop')">Browse the shop</button>
+      <button class="btn-ghost" onclick="scrollToId('classes')">Find a class</button>
+    </div>
+  </div>
+  <div>
+    <svg viewBox="0 0 420 380" width="100%">
+      <ellipse cx="210" cy="330" rx="150" ry="18" fill="#DAD3C0"/>
+      <path d="M140 120 C130 180 130 250 155 300 C175 335 245 335 265 300 C290 250 290 180 280 120 Z" fill="#F4F1E8" stroke="#3E5C55" stroke-width="2"/>
+      <path d="M150 130 Q210 155 270 130" fill="none" stroke="#3E5C55" stroke-width="1.4" opacity="0.5"/>
+      <path d="M145 180 Q210 205 275 180" fill="none" stroke="#3E5C55" stroke-width="1.4" opacity="0.4"/>
+      <ellipse cx="210" cy="118" rx="70" ry="16" fill="#E9C9BC" stroke="#B5533C" stroke-width="2"/>
+      <ellipse cx="210" cy="118" rx="52" ry="9" fill="#DAD3C0"/>
+      <circle cx="80" cy="70" r="26" fill="none" stroke="#B5533C" stroke-width="2" opacity="0.6"/>
+      <circle cx="345" cy="60" r="16" fill="#3E5C55" opacity="0.25"/>
+      <circle cx="360" cy="230" r="9" fill="#B5533C" opacity="0.5"/>
+    </svg>
+  </div>
+</div>
+
+<!-- SHOP -->
+<section id="shop">
+  <div class="section-head">
+    <div class="eyebrow">Shop</div>
+    <h2>Made on our wheels, glazed in our kiln.</h2>
+    <p>Every piece below was thrown by a studio member or resident potter. Small batches — once it's gone, it's gone until the next firing.</p>
+  </div>
+  <div class="grid-4" id="productGrid"></div>
+</section>
+
+<!-- MEMBERSHIP -->
+<section id="membership" class="alt-bg">
+  <div class="section-head">
+    <div class="eyebrow">Membership</div>
+    <h2>Open studio access, month to month.</h2>
+    <p>Members get keycard access to throw, trim, and glaze on their own schedule — no long-term contract, cancel anytime.</p>
+  </div>
+  <div class="grid-3" id="tierGrid"></div>
+</section>
+
+<!-- CLASSES -->
+<section id="classes">
+  <div class="section-head">
+    <div class="eyebrow">Classes</div>
+    <h2>Upcoming sessions.</h2>
+    <p>Small groups, six seats max, all materials and firing included. Pick a class to see open time slots.</p>
+  </div>
+  <div id="classList"></div>
+</section>
+
+<!-- GIVE -->
+<section id="give">
+  <div class="give-panel">
+    <div>
+      <div class="eyebrow" style="color:#DCE6E2;">Give</div>
+      <h2>Keep a seat open at the wheel.</h2>
+      <p>The Community Kiln Fund covers class fees for neighborhood teens and a weekly free studio night. Every firing costs about $40 in gas and glaze — your gift goes straight to that.</p>
+    </div>
+    <div>
+      <div class="amount-row" id="amountRow"></div>
+      <div class="custom-amount">
+        <span>$</span>
+        <input type="number" id="customAmount" placeholder="Other amount" min="1">
+      </div>
+      <div style="margin-top:22px;">
+        <button class="give-btn" onclick="addDonation()">Add to gift</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-wrap">
+    <div>
+      <div class="brand-name" style="font-size:16px;">Hearthstone Clay Co.</div>
+      <p style="margin-top:6px;">418 Millrace Lane · open Tue–Sun, 10–6</p>
+    </div>
+    <p>This is a demo storefront. No real payments are processed.</p>
+  </div>
+</footer>
+
+<!-- CART DRAWER -->
+<div class="overlay" id="overlay" onclick="closeAllPanels()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-head">
+    <h3>Your cart</h3>
+    <button class="drawer-close" onclick="closeAllPanels()">×</button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+  <div class="drawer-foot">
+    <div class="total-row"><span>Total</span><span id="cartTotal">$0.00</span></div>
+    <button class="checkout-btn" id="checkoutBtn" onclick="openCheckout()" disabled>Checkout</button>
+  </div>
+</div>
+
+<!-- BOOKING MODAL -->
+<div class="modal-overlay" id="bookingModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('bookingModal')">×</button>
+    <h3 id="bookingTitle">Pick a time</h3>
+    <p class="sub" id="bookingSub"></p>
+    <div class="slot-list" id="slotList"></div>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal-overlay" id="checkoutModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('checkoutModal')">×</button>
+    <div id="checkoutContent"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------------- Data ---------------- */
+const products = [
+  {id:'p1', name:'Speckled Mug', desc:'12oz stoneware, oatmeal glaze', price:28, art:'mug'},
+  {id:'p2', name:'Carved Bowl', desc:'Wide serving bowl, sage glaze', price:46, art:'bowl'},
+  {id:'p3', name:'Bud Vase', desc:'Single-stem, rust drip glaze', price:34, art:'vase'},
+  {id:'p4', name:'Planter, small', desc:'Drainage hole + saucer', price:38, art:'planter'},
+  {id:'p5', name:'Pour-Over Set', desc:'Dripper + mug, matte white', price:56, art:'pour'},
+  {id:'p6', name:'Butter Dish', desc:'Lidded, natural clay body', price:32, art:'butter'},
+  {id:'p7', name:'Dinner Plate', desc:'10in, hand-trimmed rim', price:30, art:'plate'},
+  {id:'p8', name:'Tumbler Pair', desc:'Set of two, sage + oatmeal', price:44, art:'tumbler'}
+];
+
+const tiers = [
+  {id:'t1', name:'Open Studio', price:65, features:['20 hrs studio time / mo','Basic tools provided','Community firing slot'], featured:false},
+  {id:'t2', name:'Studio Member', price:120, features:['Unlimited studio hours','Personal shelf + tools locker','2 firings / mo included'], featured:true},
+  {id:'t3', name:'Kiln Partner', price:220, features:['Everything in Studio Member','Unlimited firings','1 guest pass / mo'], featured:false}
+];
+
+const classes = [
+  {id:'c1', title:'Wheel Throwing, Level 1', date:'Sat, Sep 20', dow:'SAT', meta:'10:00 AM · 3 hrs · $75', price:75,
+    slots:['10:00 AM – 1:00 PM','2:00 PM – 5:00 PM']},
+  {id:'c2', title:'Hand-Building Basics', date:'Sun, Sep 21', dow:'SUN', meta:'1:00 PM · 2.5 hrs · $60', price:60,
+    slots:['1:00 PM – 3:30 PM']},
+  {id:'c3', title:'Glaze Chemistry Workshop', date:'Wed, Sep 24', dow:'WED', meta:'6:00 PM · 2 hrs · $50', price:50,
+    slots:['6:00 PM – 8:00 PM']},
+  {id:'c4', title:'Wheel Throwing, Level 2', date:'Sat, Sep 27', dow:'SAT', meta:'10:00 AM · 3 hrs · $85', price:85,
+    slots:['10:00 AM – 1:00 PM','2:00 PM – 5:00 PM']}
+];
+
+const donationPresets = [15, 40, 100];
+
+/* ---------------- State ---------------- */
+let cart = []; // {key, type, name, detail, price, qty}
+let selectedDonation = null;
+let activeClass = null;
+
+/* ---------------- Render: static content ---------------- */
+function artSVG(kind){
+  const shapes = {
+    mug:'<rect x="34" y="30" width="46" height="42" rx="4" fill="#F4F1E8" stroke="#3E5C55" stroke-width="2"/><path d="M80 42 h12 a10 10 0 0 1 0 20 h-12" fill="none" stroke="#3E5C55" stroke-width="2"/>',
+    bowl:'<path d="M20 45 Q60 80 100 45 L92 55 Q60 78 28 55 Z" fill="#E9C9BC" stroke="#B5533C" stroke-width="2"/>',
+    vase:'<path d="M50 20 q-10 10 -6 24 q4 12 -8 20 q-8 8 0 20 h28 q8 -12 0 -20 q-12 -8 -8 -20 q4 -14 -6 -24Z" fill="#F4F1E8" stroke="#3E5C55" stroke-width="2"/>',
+    planter:'<path d="M28 32 h48 l-8 38 h-32 Z" fill="#DAD3C0" stroke="#3E5C55" stroke-width="2"/>',
+    pour:'<rect x="30" y="40" width="30" height="30" rx="3" fill="#F4F1E8" stroke="#3E5C55" stroke-width="2"/><path d="M65 30 h22 l-8 26 h-8Z" fill="#E9C9BC" stroke="#B5533C" stroke-width="2"/>',
+    butter:'<rect x="26" y="46" width="52" height="16" rx="6" fill="#F4F1E8" stroke="#3E5C55" stroke-width="2"/><rect x="30" y="38" width="44" height="10" rx="5" fill="#DAD3C0" stroke="#3E5C55" stroke-width="1.4"/>',
+    plate:'<ellipse cx="52" cy="52" rx="38" ry="14" fill="#F4F1E8" stroke="#3E5C55" stroke-width="2"/><ellipse cx="52" cy="52" rx="22" ry="8" fill="#DAD3C0"/>',
+    tumbler:'<rect x="24" y="30" width="20" height="42" rx="3" fill="#E9C9BC" stroke="#B5533C" stroke-width="2"/><rect x="56" y="30" width="20" height="42" rx="3" fill="#F4F1E8" stroke="#3E5C55" stroke-width="2"/>'
+  };
+  return `<svg width="100" height="90" viewBox="0 0 100 90">${shapes[kind]||shapes.mug}</svg>`;
+}
+
+function renderProducts(){
+  const grid = document.getElementById('productGrid');
+  grid.innerHTML = products.map(p => `
+    <div class="product-card">
+      <div class="product-art">${artSVG(p.art)}</div>
+      <div class="product-body">
+        <h3>${p.name}</h3>
+        <p class="desc">${p.desc}</p>
+        <div class="product-foot">
+          <span class="price">$${p.price}</span>
+          <button class="add-btn" onclick="addProduct('${p.id}')">Add</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderTiers(){
+  const grid = document.getElementById('tierGrid');
+  grid.innerHTML = tiers.map(t => `
+    <div class="tier-card ${t.featured ? 'featured' : ''}">
+      <span class="tier-name">${t.name}</span>
+      <div class="tier-price">$${t.price}<span> / month</span></div>
+      <ul class="tier-list">${t.features.map(f => `<li>${f}</li>`).join('')}</ul>
+      <button class="tier-btn" onclick="addMembership('${t.id}')">Choose ${t.name}</button>
+    </div>
+  `).join('');
+}
+
+function renderClasses(){
+  const list = document.getElementById('classList');
+  list.innerHTML = classes.map(c => `
+    <div class="class-row">
+      <div class="class-date"><span class="dow">${c.dow}</span>${c.date.split(', ')[1]}</div>
+      <div>
+        <div class="class-title">${c.title}</div>
+        <div class="class-meta">${c.meta}</div>
+      </div>
+      <button class="book-btn" onclick="openBooking('${c.id}')">Book</button>
+    </div>
+  `).join('');
+}
+
+function renderDonationChips(){
+  const row = document.getElementById('amountRow');
+  row.innerHTML = donationPresets.map(a => `
+    <button class="amount-chip" data-amt="${a}" onclick="pickDonation(${a})">$${a}</button>
+  `).join('');
+}
+
+/* ---------------- Cart logic ---------------- */
+function findItem(key){ return cart.find(i => i.key === key); }
+
+function addProduct(id){
+  const p = products.find(x => x.id === id);
+  const key = 'prod-' + id;
+  const existing = findItem(key);
+  if (existing) existing.qty += 1;
+  else cart.push({key, type:'Product', name:p.name, detail:p.desc, price:p.price, qty:1});
+  toast(`${p.name} added to cart`);
+  refreshCart();
+}
+
+function addMembership(id){
+  const t = tiers.find(x => x.id === id);
+  cart = cart.filter(i => i.type !== 'Membership'); // one membership at a time
+  cart.push({key:'mem-'+id, type:'Membership', name:t.name+' Membership', detail:'Billed monthly', price:t.price, qty:1});
+  toast(`${t.name} membership added`);
+  refreshCart();
+  openCart();
+}
+
+function openBooking(classId){
+  activeClass = classes.find(c => c.id === classId);
+  document.getElementById('bookingTitle').textContent = activeClass.title;
+  document.getElementById('bookingSub').textContent = activeClass.date + ' · choose a time slot';
+  document.getElementById('slotList').innerHTML = activeClass.slots.map(s => `
+    <button class="slot-btn" onclick="chooseSlot('${s}')">${s}</button>
+  `).join('');
+  openModal('bookingModal');
+}
+
+function chooseSlot(slot){
+  const key = 'class-' + activeClass.id + '-' + slot;
+  if (!findItem(key)){
+    cart.push({key, type:'Class', name:activeClass.title, detail:activeClass.date + ' · ' + slot, price:activeClass.price, qty:1});
+  }
+  closeModal('bookingModal');
+  toast('Class reserved — added to cart');
+  refreshCart();
+  openCart();
+}
+
+function pickDonation(amt){
+  selectedDonation = amt;
+  document.getElementById('customAmount').value = '';
+  document.querySelectorAll('.amount-chip').forEach(c => {
+    c.classList.toggle('selected', Number(c.dataset.amt) === amt);
+  });
+}
+
+function addDonation(){
+  const custom = Number(document.getElementById('customAmount').value);
+  const amt = custom > 0 ? custom : selectedDonation;
+  if (!amt){ toast('Pick or enter an amount first'); return; }
+  cart = cart.filter(i => i.type !== 'Donation');
+  cart.push({key:'don-'+Date.now(), type:'Donation', name:'Community Kiln Fund', detail:'One-time gift', price:amt, qty:1});
+  toast('Thank you — gift added to cart');
+  refreshCart();
+  openCart();
+}
+
+function changeQty(key, delta){
+  const item = findItem(key);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) cart = cart.filter(i => i.key !== key);
+  refreshCart();
+}
+
+function removeItem(key){
+  cart = cart.filter(i => i.key !== key);
+  refreshCart();
+}
+
+function cartTotal(){
+  return cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+}
+
+function refreshCart(){
+  const count = cart.reduce((s,i) => s + i.qty, 0);
+  document.getElementById('cartCount').textContent = count;
+  document.getElementById('checkoutBtn').disabled = cart.length === 0;
+
+  const body = document.getElementById('drawerBody');
+  if (cart.length === 0){
+    body.innerHTML = '<div class="empty-cart">Your cart is empty.<br>Browse the shop, pick a class, or choose a membership to get started.</div>';
+  } else {
+    body.innerHTML = cart.map(i => `
+      <div class="cart-item">
+        <div>
+          <span class="cart-item-tag">${i.type}</span>
+          <div class="cart-item-name">${i.name}</div>
+          <div class="cart-item-detail">${i.detail}</div>
+        </div>
+        <div class="cart-item-right">
+          <span class="cart-item-price">$${(i.price * i.qty).toFixed(2)}</span>
+          ${i.type === 'Product' ? `
+            <div class="qty-controls">
+              <button onclick="changeQty('${i.key}',-1)">–</button>
+              <span>${i.qty}</span>
+              <button onclick="changeQty('${i.key}',1)">+</button>
+            </div>` : `<button class="remove-link" onclick="removeItem('${i.key}')">Remove</button>`
+          }
+        </div>
+      </div>
+    `).join('');
+  }
+  document.getElementById('cartTotal').textContent = '$' + cartTotal().toFixed(2);
+}
+
+/* ---------------- Panels ---------------- */
+function openCart(){
+  document.getElementById('overlay').classList.add('open');
+  document.getElementById('drawer').classList.add('open');
+}
+function closeAllPanels(){
+  document.getElementById('overlay').classList.remove('open');
+  document.getElementById('drawer').classList.remove('open');
+  closeModal('bookingModal');
+  closeModal('checkoutModal');
+}
+function openModal(id){
+  document.getElementById('overlay').classList.add('open');
+  document.getElementById(id).classList.add('open');
+}
+function closeModal(id){
+  document.getElementById(id).classList.remove('open');
+  if (!document.getElementById('drawer').classList.contains('open')){
+    document.getElementById('overlay').classList.remove('open');
+  }
+}
+function scrollToId(id){ document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
+
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+/* ---------------- Checkout (mock) ---------------- */
+function openCheckout(){
+  if (cart.length === 0) return;
+  document.getElementById('drawer').classList.remove('open');
+  renderCheckoutForm();
+  openModal('checkoutModal');
+}
+
+function renderCheckoutForm(){
+  document.getElementById('checkoutContent').innerHTML = `
+    <h3>Checkout</h3>
+    <p class="sub">Order total: $${cartTotal().toFixed(2)}</p>
+    <div class="demo-note">Demo mode — this form doesn't send your details anywhere or charge a real card.</div>
+    <form id="payForm" onsubmit="submitPayment(event)">
+      <div class="field">
+        <label>Name on card</label>
+        <input type="text" required placeholder="Jordan Rivera">
+      </div>
+      <div class="field">
+        <label>Card number</label>
+        <input type="text" required maxlength="19" placeholder="4242 4242 4242 4242" oninput="formatCard(this)">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Expiry</label>
+          <input type="text" required maxlength="5" placeholder="MM/YY" oninput="formatExpiry(this)">
+        </div>
+        <div class="field">
+          <label>CVC</label>
+          <input type="text" required maxlength="4" placeholder="123">
+        </div>
+      </div>
+      <div class="field">
+        <label>Email for receipt</label>
+        <input type="email" required placeholder="you@example.com">
+      </div>
+      <button class="pay-btn" type="submit" id="payBtn">Pay $${cartTotal().toFixed(2)}</button>
+    </form>
+  `;
+}
+
+function formatCard(el){
+  el.value = el.value.replace(/\D/g,'').slice(0,16).replace(/(.{4})/g,'$1 ').trim();
+}
+function formatExpiry(el){
+  let v = el.value.replace(/\D/g,'').slice(0,4);
+  if (v.length > 2) v = v.slice(0,2) + '/' + v.slice(2);
+  el.value = v;
+}
+
+function submitPayment(e){
+  e.preventDefault();
+  const btn = document.getElementById('payBtn');
+  btn.disabled = true;
+  btn.textContent = 'Processing…';
+  setTimeout(() => {
+    const total = cartTotal().toFixed(2);
+    document.getElementById('checkoutContent').innerHTML = `
+      <div class="success-screen">
+        <div class="success-icon">✓</div>
+        <h3>Order confirmed</h3>
+        <p class="sub">$${total} · a receipt would be emailed to you in a live version of this app.</p>
+        <button class="btn-primary" style="margin-top:10px;" onclick="finishCheckout()">Done</button>
+      </div>
+    `;
+    cart = [];
+    refreshCart();
+  }, 1100);
+}
+
+function finishCheckout(){
+  closeModal('checkoutModal');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+/* ---------------- Init ---------------- */
+renderProducts();
+renderTiers();
+renderClasses();
+renderDonationChips();
+refreshCart();
+</script>
+</body>
+</html>
