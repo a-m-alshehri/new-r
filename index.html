@@ -183,6 +183,31 @@
     border-radius:3px; font-size:15px; cursor:pointer; font-weight:600;
   }
 
+  /* ---------- About / CEO ---------- */
+  .about-grid{display:grid; grid-template-columns:0.8fr 1.2fr; gap:56px; align-items:start;}
+  .ceo-card{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:6px;
+    padding:32px; text-align:center; position:sticky; top:100px;
+  }
+  .ceo-portrait{margin:0 auto 18px;}
+  .ceo-name{font-size:22px;}
+  .ceo-title{font-size:13px; color:var(--accent); font-weight:600; margin-top:4px; letter-spacing:0.01em;}
+  .ceo-quote{
+    font-family:'Fraunces',serif; font-style:italic; font-size:16px; color:var(--ink-soft);
+    margin-top:18px; line-height:1.5; padding-top:18px; border-top:1px solid var(--line);
+  }
+  .story-block{display:flex; flex-direction:column; gap:26px;}
+  .story-block p{font-size:15.5px; max-width:64ch;}
+  .timeline{margin-top:10px; display:flex; flex-direction:column;}
+  .timeline-item{
+    display:grid; grid-template-columns:80px 1fr; gap:20px;
+    padding:18px 0; border-top:1px solid var(--line);
+  }
+  .timeline-item:last-child{border-bottom:1px solid var(--line);}
+  .timeline-year{font-family:'Fraunces',serif; color:var(--accent); font-size:17px;}
+  .timeline-text h4{font-size:15.5px; font-weight:600; margin:0 0 4px;}
+  .timeline-text p{font-size:14px; margin:0; color:var(--ink-soft);}
+
   /* ---------- Footer ---------- */
   footer{border-top:1px solid var(--line); padding:44px 28px; }
   .footer-wrap{max-width:1180px; margin:0 auto; display:flex; justify-content:space-between; flex-wrap:wrap; gap:20px;}
@@ -289,6 +314,8 @@
     .grid-4{grid-template-columns:repeat(2,1fr);}
     .grid-3{grid-template-columns:1fr;}
     .give-panel{grid-template-columns:1fr;}
+    .about-grid{grid-template-columns:1fr;}
+    .ceo-card{position:static;}
     nav.links{
       position:absolute; top:100%; left:0; right:0; background:var(--bg);
       flex-direction:column; padding:18px 28px; gap:16px; border-bottom:1px solid var(--line);
@@ -315,6 +342,7 @@
       <a href="#membership">Membership</a>
       <a href="#classes">Classes</a>
       <a href="#give">Give</a>
+      <a href="#about">About</a>
     </nav>
     <div style="display:flex; align-items:center; gap:10px;">
       <button class="cart-btn" onclick="openCart()">
@@ -396,6 +424,60 @@
       </div>
       <div style="margin-top:22px;">
         <button class="give-btn" onclick="addDonation()">Add to gift</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT / CEO -->
+<section id="about" class="alt-bg">
+  <div class="section-head">
+    <div class="eyebrow">About</div>
+    <h2>From one wheel in a garage to a full studio.</h2>
+  </div>
+  <div class="about-grid">
+    <div class="ceo-card">
+      <svg class="ceo-portrait" width="120" height="120" viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="58" fill="#F4F1E8" stroke="#C9C2B0" stroke-width="2"/>
+        <circle cx="60" cy="50" r="22" fill="#3E5C55"/>
+        <path d="M22 108c4-24 20-38 38-38s34 14 38 38" fill="#3E5C55"/>
+      </svg>
+      <div class="ceo-name">Abdulmalik Alshehri</div>
+      <div class="ceo-title">Founder &amp; CEO</div>
+      <div class="ceo-quote">"A studio should feel like somewhere you're allowed to fail at something with your hands."</div>
+    </div>
+    <div class="story-block">
+      <p>Abdulmalik Alshehri started Hearthstone Clay Co. in a rented garage with a single secondhand wheel and a kiln he built himself from a set of online instructions and a lot of trial and error. He wasn't trained as a potter — he was working in logistics at the time — but a weekend class he took on a whim turned into a habit, and the habit turned into a business plan sketched on the back of a delivery manifest.</p>
+      <p>What started as a way to keep one wheel running eventually became a full studio, a shop, and a teaching program. Abdulmalik still throws on Tuesday mornings before the studio opens to members, and most of the glaze recipes on the shelves trace back to tests he ran in that first garage.</p>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-year">2014</div>
+          <div class="timeline-text">
+            <h4>One wheel, one garage</h4>
+            <p>Abdulmalik builds a kiln from a kit and starts throwing on weekends after his regular job.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2017</div>
+          <div class="timeline-text">
+            <h4>Hearthstone opens its doors</h4>
+            <p>The garage operation moves into a small storefront on Millrace Lane and opens to the public for the first time.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2020</div>
+          <div class="timeline-text">
+            <h4>The Community Kiln Fund launches</h4>
+            <p>A rough year for a lot of small studios. Members start pooling change from every sale to keep a free studio night running for local teens.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2024</div>
+          <div class="timeline-text">
+            <h4>500 members and counting</h4>
+            <p>Hearthstone adds a second kiln, a full class schedule, and a shop that now ships pieces well outside Millrace Lane.</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
